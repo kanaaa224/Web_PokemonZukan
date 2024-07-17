@@ -3,8 +3,14 @@ class App {
         window.addEventListener('load', () => {
             this.initialize();
 
-            for(let i = 0; i < 250; i++) {
-                this.generateCard();
+            let number = (new URL(window.location.href)).searchParams.get('number');
+
+            if(number) {
+                this.generateCard(number);
+            } else {
+                for(let i = 0; i < 250; i++) {
+                    this.generateCard();
+                }
             }
         });
     }
@@ -12,32 +18,33 @@ class App {
     initialize() {
         if(document.querySelector('main')) document.querySelector('main').remove();
 
-        document.querySelector('body').innerHTML += '<header></header><main><div class="container"><div class="cards"></div></div></main><footer><div class="container"><p>&copy; 2023&nbsp;<a href="//github.com/kanaaa224/" style="color:inherit;"><u>kanaaa224</u></a>.</p></div></footer>';
+        document.querySelector('body').innerHTML += `<header></header><main><div class="container"><div class="cards"></div></div></main><footer><div class="container"><p>&copy; 2023&nbsp;<a href="//github.com/kanaaa224/" style="color:inherit;"><u>kanaaa224</u></a>.</p></div></footer>`;
     }
 
-    generateCard(id = (Math.floor(Math.random() * 250) + 1)) {
+    generateCard(number = (Math.floor(Math.random() * 500) + 1)) {
         let callback = (d) => {
             const typeColors = {
-                bug:      '#26de81',
-                dragon:   '#ffeaa7',
-                electric: '#fed330',
-                fairy:    '#ff0069',
-                fighting: '#30336b',
-                fire:     '#f0932b',
-                flying:   '#81ecec',
-                grass:    '#00b894',
-                ground:   '#efb549',
-                ghost:    '#a55eea',
-                ice:      '#74b9ff',
                 normal:   '#95afc0',
-                poison:   '#6c5ce7',
-                psychic:  '#a29bfe',
-                rock:     '#2d3436',
+                fire:     '#f0932b',
                 water:    '#0190ff',
-                dark:     '#353535'
+                electric: '#fed330',
+                grass:    '#00b894',
+                ice:      '#74b9ff',
+                fighting: '#ff4d4d',
+                poison:   '#6c5ce7',
+                ground:   '#efb549',
+                flying:   '#81ecec',
+                psychic:  '#a29bfe',
+                bug:      '#26de81',
+                rock:     '#2d3436',
+                ghost:    '#a55eea',
+                dragon:   '#ffc200',
+                dark:     '#30336b',
+                steel:    '#aeaeae',
+                fairy:    '#ff0069',
             };
 
-            let imgSrc = d.sprites.other.dream_world.front_default;
+            let img_src = d.sprites.other.dream_world.front_default;
 
             let name = d.name[0].toUpperCase() + d.name.slice(1);
 
@@ -49,15 +56,18 @@ class App {
             let typeColor = typeColors[d.types[0].type.name];
 
             let element = `
-                <div class="card" style="background: radial-gradient( circle at 50% 0%, ${typeColor} 36%, #ffffff 36%);">
-                    <p class="hp"><span>HP</span>${hp}</p>
-                    <img src=${imgSrc}>
+                <div class="card" style="background: radial-gradient( circle at 50% 0%, ${typeColor} 36%, #ffffff 36%);" onclick="window.open('./?number=${number}');">
+                    <div class="badges">
+                        <div class="badge"><span>#</span>${number}</div>
+                        <div class="badge"><span>HP</span>${hp}</div>
+                    </div>
+                    <img src=${img_src}>
                     <h2 class="name">${name}</h2>
                     <div class="types">
             `;
 
             d.types.forEach((item) => {
-                element += '<span style="background-color: ' + typeColor + ';">' + item.type.name.toUpperCase() + '</span>';
+                element += `<span style="background-color: ${typeColor};">${item.type.name.toUpperCase()}</span>`;
             });
 
             element += `
@@ -67,12 +77,10 @@ class App {
                             <h3>${attack}</h3>
                             <p>Attack</p>
                         </div>
-
                         <div>
                             <h3>${defence}</h3>
                             <p>Defense</p>
                         </div>
-
                         <div>
                             <h3>${speed}</h3>
                             <p>Speed</p>
@@ -84,7 +92,7 @@ class App {
             document.querySelector('main .container .cards').innerHTML += element;
         }
 
-        fetch('https://pokeapi.co/api/v2/pokemon/' + id)
+        fetch('//pokeapi.co/api/v2/pokemon/' + number)
             .then(response => response.json())
             .then(data => callback(data))
     }
