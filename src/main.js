@@ -3,7 +3,7 @@ class App {
         window.addEventListener('load', () => {
             this.initialize();
 
-            for(let i = 0; i < 150; i++) {
+            for(let i = 0; i < 250; i++) {
                 this.generateCard();
             }
         });
@@ -15,7 +15,7 @@ class App {
         document.querySelector('body').innerHTML += '<header></header><main><div class="container"><div class="cards"></div></div></main><footer><div class="container"><p>&copy; 2023&nbsp;<a href="//github.com/kanaaa224/" style="color:inherit;"><u>kanaaa224</u></a>.</p></div></footer>';
     }
 
-    generateCard(id = (Math.floor(Math.random() * 150) + 1)) {
+    generateCard(id = (Math.floor(Math.random() * 250) + 1)) {
         let callback = (d) => {
             const typeColors = {
                 bug:      '#26de81',
@@ -34,6 +34,7 @@ class App {
                 psychic:  '#a29bfe',
                 rock:     '#2d3436',
                 water:    '#0190ff',
+                dark:     '#353535'
             };
 
             let imgSrc = d.sprites.other.dream_world.front_default;
