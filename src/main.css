@@ -86,7 +86,7 @@ main .container {
     
             .types {
                 display: flex;
-                justify-content: space-around;
+                justify-content: space-evenly;
                 margin: 1rem 0;
     
                 span {
