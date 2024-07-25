@@ -8,8 +8,20 @@ class App {
             if(number) {
                 this.generateCard(number);
             } else {
-                for(let i = 0; i < 250; i++) {
-                    this.generateCard();
+                let maximumItemNum = 250;                  // 最大カード数
+                let selectRange    = { min: 1, max: 500 }; // 選定範囲
+                let selectedItems  = [];                   // 選定済みカード
+
+                for(let i = 0; i < maximumItemNum; i++) {
+                    let itemNum = 0;
+
+                    do {
+                        itemNum = (Math.floor(Math.random() * (selectRange.max - selectRange.min + 1)) + selectRange.min);
+                    } while(selectedItems.includes(itemNum));
+
+                    selectedItems.push(itemNum);
+
+                    this.generateCard(itemNum);
                 }
             }
         });
@@ -23,7 +35,7 @@ class App {
         document.querySelector('body').innerHTML += `<header></header><main><div class="container"><div class="cards"></div></div></main><footer><div class="container"><p>&copy; 2023&nbsp;<a href="//github.com/kanaaa224/" style="color:inherit;"><u>kanaaa224</u></a>.</p></div></footer>`;
     }
 
-    generateCard(number = (Math.floor(Math.random() * 500) + 1)) {
+    generateCard(number = 0) {
         let callback = (d) => {
             const typeColors = {
                 normal:   '#95afc0',
@@ -60,7 +72,7 @@ class App {
             let element = `
                 <div class="card" style="background: radial-gradient( circle at 50% 0%, ${typeColor} 36%, #ffffff 36%);" onclick="window.open('./?number=${number}');">
                     <div class="badges">
-                        <div class="badge"><span>#</span>${number}</div>
+                        <div class="badge"><span>No.</span>${number}</div>
                         <div class="badge"><span>HP</span>${hp}</div>
                     </div>
                     <img src=${img_src}>
