@@ -19,6 +19,32 @@ body {
 
     background-color: #333;
     color: #fff;
+
+    a {
+        color: inherit;
+    }
+
+    .clickable {
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .clickable:hover {
+        opacity: 0.7;
+        box-shadow: none;
+    }
+
+    .clickable:active {
+        opacity: 0.5;
+        box-shadow: none;
+    }
+
+    .disable {
+        opacity: 0.5;
+
+        pointer-events: none;
+        user-select: none;
+    }
 }
 
 main .container {
@@ -157,19 +183,6 @@ main .container {
 
         border: none;
         border-radius: 0.5rem;
-
-        cursor: pointer;
-        user-select: none;
-    }
-
-    button:hover {
-        opacity: 0.7;
-        box-shadow: none;
-    }
-
-    button:active {
-        opacity: 0.5;
-        box-shadow: none;
     }
 }
 
@@ -190,5 +203,31 @@ footer .container {
     p {
         margin: 0;
         font-size: 0.75rem;
+    }
+}
+
+/* ---------------------------------------------------------------------------------------------- */
+
+@media screen and (max-width: 480px) {
+    body {
+        .clickable:hover {
+            opacity: 1.0;
+        }
+
+        .clickable:active {
+            opacity: 0.5;
+        }
+    }
+}
+
+@media screen and (max-width: 959px) {
+    body {
+        .clickable:hover {
+            opacity: 1.0;
+        }
+
+        .clickable:active {
+            opacity: 0.5;
+        }
     }
 }
