@@ -1,5 +1,7 @@
 class App {
     constructor() {
+        this.api_url = '//pokeapi.co/api/v2/pokemon/';
+
         window.addEventListener('load', () => {
             this.initialize();
 
@@ -106,7 +108,7 @@ class App {
             document.querySelector('main .container .cards').innerHTML += element;
         }
 
-        fetch('//pokeapi.co/api/v2/pokemon/' + number)
+        fetch(this.api_url + number)
             .then(response => response.json())
             .then(data => callback(data))
     }
